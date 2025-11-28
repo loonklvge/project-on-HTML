@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин одежды</title>
+    <style>
+        /* SCSS переменные */
+        :root {
+            --primary-bg: #0a192f;
+            --secondary-bg: #1e3a5f;
+            --card-bg: rgba(21, 45, 80, 0.7);
+            --header-bg: rgba(15, 35, 65, 0.95);
+            --accent-color: #64b5f6;
+            --accent-hover: #90caf9;
+            --text-primary: #e0e0e0;
+            --text-secondary: #bbdefb;
+            --border-color: rgba(100, 181, 246, 0.3);
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Базовые стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Вложенность селекторов */
+        header {
+            background: var(--header-bg);
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            h1 {
+                text-align: center;
+                color: var(--accent-color);
+                margin-bottom: 1.5rem;
+                font-size: 2.2rem;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            }
+
+            nav {
+                ul {
+                    display: flex;
+                    justify-content: center;
+                    list-style: none;
+                    flex-wrap: wrap;
+                }
+
+                li {
+                    margin: 0 1.2rem;
+                }
+
+                a {
+                    color: var(--text-secondary);
+                    text-decoration: none;
+                    font-weight: 600;
+                    font-size: 1.1rem;
+                    padding: 0.5rem 1rem;
+                    border-radius: 4px;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background: rgba(100, 181, 246, 0.2);
+                        color: #e3f2fd;
+                        transform: translateY(-2px);
+                    }
+                }
+            }
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            background: var(--card-bg);
+            margin: 2.5rem 0;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+
+            h2 {
+                color: var(--accent-hover);
+                margin-bottom: 1.5rem;
+                font-size: 1.8rem;
+                border-bottom: 2px solid rgba(100, 181, 246, 0.3);
+                padding-bottom: 0.5rem;
+            }
+
+            h3 {
+                color: var(--text-secondary);
+                margin: 1rem 0 0.5rem;
+            }
+        }
+
+        /* Миксин для карточек товаров */
+        .product, .new-item, .category, .sale-item {
+            background: rgba(30, 58, 95, 0.8);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            p {
+                margin: 0.5rem 0;
+                color: #cfd8dc;
+            }
+        }
+
+        img {
+            border-radius: 6px;
+            margin-top: 0.8rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+
+            &:hover {
+                transform: scale(1.02);
+            }
+        }
+
+        .video-container {
+            background: rgba(30, 58, 95, 0.8);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        video, audio {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 6px;
+            background: var(--primary-bg);
+        }
+
+        /* Стили формы с использованием вложенности */
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+
+            div {
+                margin-bottom: 1.5rem;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 0.5rem;
+                color: var(--text-secondary);
+                font-weight: 500;
+            }
+
+            input, textarea {
+                width: 100%;
+                padding: 0.8rem;
+                background: rgba(30, 58, 95, 0.8);
+                border: 1px solid var(--border-color);
+                border-radius: 4px;
+                color: var(--text-primary);
+                font-size: 1rem;
+                transition: border 0.3s ease, box-shadow 0.3s ease;
+
+                &:focus {
+                    outline: none;
+                    border: 1px solid var(--accent-color);
+                    box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.2);
+                }
+            }
+
+            button {
+                background: #1976d2;
+                color: white;
+                border: none;
+                padding: 0.8rem 1.5rem;
+                border-radius: 4px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: block;
+                margin: 0 auto;
+
+                &:hover {
+                    background: #1565c0;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+                }
+            }
+        }
+
+        footer {
+            background: var(--header-bg);
+            padding: 2.5rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(100, 181, 246, 0.2);
+
+            p {
+                margin: 0.5rem 0;
+                color: var(--text-secondary);
+            }
+        }
+
+        /* Адаптивность с использованием медиа-запросов */
+        @media (max-width: 768px) {
+            header {
+                nav {
+                    ul {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                    
+                    li {
+                        margin: 0.5rem 0;
+                    }
+                }
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Дополнительные стили для улучшения UX */
+        .sale-item {
+            position: relative;
+            
+            &::before {
+                content: "🔥";
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 1.2rem;
+            }
+        }
+
+        .new-item {
+            position: relative;
+            
+            &::before {
+                content: "🆕";
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Добро пожаловать в магазин крутой одежды</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#new">Новинки</a></li>
+                <li><a href="#categories">Категории</a></li>
+                <li><a href="#sale">Распродажа</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <div class="video-container">
+                <video width="640" height="360" controls>
+                    <source src="" type="video/mp4">
+                    Ваш браузер не поддерживает видео тег.
+                </video>
+            </div>
+            <audio controls>
+                <source src="" type="audio/mpeg">
+                Ваш браузер не поддерживает аудио тег.
+            </audio>
+            <h2>Популярные товары</h2>
+            <div class="product">
+                <h3>Элегантное платье</h3>
+                <p>Бренд: Fashion Line</p>
+                <p>Цена: 5 990 руб.</p>
+                <img src="dress.jpg" alt="Элегантное платье" width="300">
+            </div>
+            
+            <div class="product">
+                <h3>Классические брюки</h3>
+                <p>Бренд: Classic Style</p>
+                <p>Цена: 3 490 руб.</p>
+                <img src="pants.jpeg" alt="Классические брюки" width="300">
+            </div>
+        </section>
+
+        <section id="new">
+            <h2>Новые поступления</h2>
+            <div class="new-item">
+                <h3>Осенняя коллекция</h3>
+                <p>Свитера, кардиганы и пальто</p>
+                <p>Дата поступления: 15.09.2025</p>
+            </div>
+            
+            <div class="new-item">
+                <h3>Спортивная одежда</h3>
+                <p>Удобные костюмы для тренировок</p>
+                <p>Дата поступления: 10.09.2025</p>
+            </div>
+        </section>
+
+        <section id="categories">
+            <h2>Категории одежды</h2>
+            <div class="category">
+                <h3>Женская одежда</h3>
+                <p>Ассортимент: 250 товаров</p>
+                <p>Размеры: XS-XXL</p>
+            </div>
+            
+            <div class="category">
+                <h3>Мужская одежда</h3>
+                <p>Ассортимент: 180 товаров</p>
+                <p>Размеры: S-XXXL</p>
+            </div>
+        </section>
+
+        <section id="sale">
+            <h2>Распродажа</h2>
+            <div class="sale-item">
+                <h3>Летняя коллекция со скидкой 50%</h3>
+                <p>Товаров: 45</p>
+                <p>Скидки до: 30.09.2025</p>
+            </div>
+            
+            <div class="sale-item">
+                <h3>Распродажа аксессуаров</h3>
+                <p>Товаров: 30</p>
+                <p>Скидки до: 25.09.2025</p>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Контакты</h2>
+            <form>
+                <div>
+                    <label for="name">Имя:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div>
+                    <label for="message">Сообщение:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                
+                <button type="submit">Отправить</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Модный бутик. Все права защищены.</p>
+        <p>Email: info@fashion-boutique.ru</p>
+        <p>Телефон: +7 (495) 123-45-67</p>
+        <p>Адрес: г. Ростов на дону, ул. Крутецкая, д. 25</p>
+    </footer>
+</body>
+</html>
