@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOONKLAGE - Мои заказы</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/auth.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">LOONKLVGE</a>
+                <div class="user-controls">
+                    <div class="auth-buttons" id="authButtons"></div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">ГЛАВНАЯ</a></li>
+                    <li><a href="collections.html">КОЛЛЕКЦИИ</a></li>
+                    <li><a href="shop.html">МАГАЗИН</a></li>
+                    <li><a href="orders.html">ЗАКАЗЫ</a></li>
+                    <li><a href="profile.html">ПРОФИЛЬ</a></li>
+                    <li><a href="contact.html">КОНТАКТЫ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2 class="page-title">МОИ ЗАКАЗЫ</h2>
+        <div id="ordersContainer">
+            <div id="ordersEmpty" class="empty-state">У вас пока нет заказов</div>
+            <table class="orders-table" id="ordersTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>№ ЗАКАЗА</th>
+                        <th>ДАТА</th>
+                        <th>ТОВАРЫ</th>
+                        <th>СУММА</th>
+                        <th>СТАТУС</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LOONKLAGE</h3>
+                    <p>Эксклюзивная одежда с 2015 года</p>
+                    <p>Москва, ул. Арбат, д. 25</p>
+                    <div class="social-links">
+                        <a href="https://t.me/loonklvge" class="social-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>КОНТАКТЫ</h3>
+                    <p>Telegram: @loonklvge</p>
+                    <p>Email: info@loonklage.ru</p>
+                    <p>Телефон: +7 (495) 123-45-67</p>
+                    <p>Часы работы: 10:00-22:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>ИНФОРМАЦИЯ</h3>
+                    <p><a href="delivery.html">Доставка</a></p>
+                    <p><a href="returns.html">Возврат</a></p>
+                    <p><a href="size-guide.html">Размеры</a></p>
+                    <p><a href="contact.html">Контакты</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const orders = JSON.parse(localStorage.getItem('loonklage_orders')) || [];
+            const ordersEmpty = document.getElementById('ordersEmpty');
+            const ordersTable = document.getElementById('ordersTable');
+            const ordersTableBody = document.getElementById('ordersTableBody');
+            
+            if (orders.length === 0) {
+                ordersEmpty.style.display = 'block';
+                ordersTable.style.display = 'none';
+            } else {
+                ordersEmpty.style.display = 'none';
+                ordersTable.style.display = 'table';
+                
+                ordersTableBody.innerHTML = orders.map(order => {
+                    const statusText = getStatusText(order.status);
+                    const statusClass = `status-${order.status}`;
+                    
+                    return `
+                        <tr>
+                            <td>#${order.id}</td>
+                            <td>${new Date(order.date).toLocaleDateString('ru-RU')}</td>
+                            <td>
+                                ${order.items.map(item => `
+                                    <div style="margin-bottom: 0.5rem;">
+                                        ${item.name} (${item.size}) × ${item.quantity}
+                                    </div>
+                                `).join('')}
+                            </td>
+                            <td>${order.total.toLocaleString()} ₽</td>
+                            <td>
+                                <span class="status ${statusClass}">
+                                    ${statusText}
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        });
+
+        function getStatusText(status) {
+            const statusMap = {
+                'new': 'НОВЫЙ',
+                'processing': 'В ОБРАБОТКЕ',
+                'shipped': 'ОТПРАВЛЕН',
+                'delivered': 'ДОСТАВЛЕН',
+                'cancelled': 'ОТМЕНЕН'
+            };
+            return statusMap[status] || status;
+        }
+    </script>
+</body>
+</html>

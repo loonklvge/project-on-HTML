@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOONKLAGE - Вход</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/auth.js"></script>
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2rem;
+            border: 1px solid var(--gray);
+            background: var(--black-light);
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: var(--white-secondary);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .auth-tab:hover {
+            color: var(--white);
+        }
+        
+        .auth-tab.active {
+            color: var(--white);
+            border-bottom: 2px solid var(--white);
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--white-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--black-dark);
+            border: 1px solid var(--gray);
+            color: var(--white);
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--white);
+        }
+        
+        .btn-primary {
+            background: var(--white);
+            color: var(--black);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: var(--gray);
+            color: var(--white);
+        }
+        
+        .error-message {
+            background: #8b0000;
+            color: white;
+            padding: 0.8rem 1rem;
+            border-radius: 3px;
+            margin-bottom: 1rem;
+            display: none;
+            animation: fadeIn 0.3s ease;
+            border-left: 4px solid #ff0000;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .success-message {
+            background: #006400;
+            color: white;
+            padding: 0.8rem 1rem;
+            border-radius: 3px;
+            margin-bottom: 1rem;
+            display: none;
+            animation: fadeIn 0.3s ease;
+            border-left: 4px solid #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">LOONKLVGE</a>
+                <div class="user-controls">
+                    <div class="auth-buttons" id="authButtons"></div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">ГЛАВНАЯ</a></li>
+                    <li><a href="collections.html">КОЛЛЕКЦИИ</a></li>
+                    <li><a href="shop.html">МАГАЗИН</a></li>
+                    <li><a href="orders.html">ЗАКАЗЫ</a></li>
+                    <li><a href="profile.html">ПРОФИЛЬ</a></li>
+                    <li><a href="contact.html">КОНТАКТЫ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="auth-container">
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="showAuthTab('login')">ВОЙТИ</button>
+                <button class="auth-tab" onclick="showAuthTab('register')">РЕГИСТРАЦИЯ</button>
+            </div>
+            
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
+            </div>
+            
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> <span id="successText"></span>
+            </div>
+            
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label>EMAIL</label>
+                    <input type="email" id="loginEmail" class="form-control" required placeholder="example@mail.com">
+                </div>
+                <div class="form-group">
+                    <label>ПАРОЛЬ</label>
+                    <input type="password" id="loginPassword" class="form-control" required placeholder="Введите пароль">
+                </div>
+                <button type="button" class="btn-primary" onclick="handleLogin()">ВОЙТИ</button>
+            </form>
+            
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label>ИМЯ</label>
+                    <input type="text" id="registerName" class="form-control" required placeholder="Ваше имя">
+                </div>
+                <div class="form-group">
+                    <label>EMAIL</label>
+                    <input type="email" id="registerEmail" class="form-control" required placeholder="example@mail.com">
+                </div>
+                <div class="form-group">
+                    <label>ПАРОЛЬ</label>
+                    <input type="password" id="registerPassword" class="form-control" required placeholder="Минимум 6 символов">
+                </div>
+                <div class="form-group">
+                    <label>ПОВТОРИТЕ ПАРОЛЬ</label>
+                    <input type="password" id="registerConfirmPassword" class="form-control" required placeholder="Повторите пароль">
+                </div>
+                <button type="button" class="btn-primary" onclick="handleRegister()">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LOONKLAGE</h3>
+                    <p>Эксклюзивная одежда с 2015 года</p>
+                    <p>Москва, ул. Арбат, д. 25</p>
+                    <div class="social-links">
+                        <a href="https://t.me/loonklvge" class="social-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>КОНТАКТЫ</h3>
+                    <p>Telegram: @loonklvge</p>
+                    <p>Email: info@loonklage.ru</p>
+                    <p>Телефон: +7 (495) 123-45-67</p>
+                    <p>Часы работы: 10:00-22:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>ИНФОРМАЦИЯ</h3>
+                    <p><a href="delivery.html" style="color: var(--white-secondary); text-decoration: none;">Доставка</a></p>
+                    <p><a href="returns.html" style="color: var(--white-secondary); text-decoration: none;">Возврат</a></p>
+                    <p><a href="size-guide.html" style="color: var(--white-secondary); text-decoration: none;">Размеры</a></p>
+                    <p><a href="contact.html" style="color: var(--white-secondary); text-decoration: none;">Контакты</a></p>
+                </div>
+            </div>
+            
+            <p style="text-align: center; margin-top: 2rem; color: var(--white-secondary); font-size: 0.9rem;">
+                &copy; 2015-2025 LOONKLAGE. Все права защищены.
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAuthButtons();
+            
+            const currentUser = JSON.parse(localStorage.getItem('loonklage_current_user'));
+            if (currentUser) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        function showAuthTab(tab) {
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.auth-tab').forEach(tabBtn => {
+                tabBtn.classList.remove('active');
+            });
+            
+            hideMessages();
+            
+            document.getElementById(tab === 'login' ? 'loginForm' : 'registerForm').classList.add('active');
+            
+            event.target.classList.add('active');
+        }
+
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            
+            errorText.textContent = message;
+            errorElement.style.display = 'block';
+            
+            setTimeout(hideMessages, 5000);
+        }
+
+        function showSuccess(message) {
+            const successElement = document.getElementById('successMessage');
+            const successText = document.getElementById('successText');
+            
+            successText.textContent = message;
+            successElement.style.display = 'block';
+            
+            setTimeout(hideMessages, 3000);
+        }
+
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            
+            if (!email || !password) {
+                showError('Заполните все поля');
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('loonklage_users')) || [];
+            
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                const safeUser = { ...user };
+                delete safeUser.password;
+                localStorage.setItem('loonklage_current_user', JSON.stringify(safeUser));
+                
+                showSuccess('Вход выполнен успешно!');
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            } else {
+                showError('Неверный email или пароль');
+            }
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            const confirmPassword = document.getElementById('registerConfirmPassword').value.trim();
+            
+            if (!name || !email || !password || !confirmPassword) {
+                showError('Заполните все поля');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('Пароли не совпадают');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('Пароль должен содержать минимум 6 символов');
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('Введите корректный email');
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('loonklage_users')) || [];
+            
+            if (users.find(user => user.email === email)) {
+                showError('Пользователь с таким email уже существует');
+                return;
+            }
+            
+            const newUser = {
+                id: Date.now(),
+                email: email,
+                name: name,
+                password: password,
+                createdAt: new Date().toISOString(),
+                orders: []
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('loonklage_users', JSON.stringify(users));
+            
+            const safeUser = { ...newUser };
+            delete safeUser.password;
+            localStorage.setItem('loonklage_current_user', JSON.stringify(safeUser));
+            
+            showSuccess('Регистрация прошла успешно! Вы будете перенаправлены...');
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

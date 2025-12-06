@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOONKLAGE - Магазин</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/auth.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">LOONKLVGE</a>
+                <div class="user-controls">
+                    <div class="auth-buttons" id="authButtons"></div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">ГЛАВНАЯ</a></li>
+                    <li><a href="collections.html">КОЛЛЕКЦИИ</a></li>
+                    <li><a href="shop.html">МАГАЗИН</a></li>
+                    <li><a href="orders.html">ЗАКАЗЫ</a></li>
+                    <li><a href="profile.html">ПРОФИЛЬ</a></li>
+                    <li><a href="contact.html">КОНТАКТЫ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2 class="page-title">МАГАЗИН</h2>
+        <div class="products-grid" id="productsGrid"></div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LOONKLAGE</h3>
+                    <p>Эксклюзивная одежда с 2015 года</p>
+                    <p>Москва, ул. Арбат, д. 25</p>
+                    <div class="social-links">
+                        <a href="https://t.me/loonklvge" class="social-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>КОНТАКТЫ</h3>
+                    <p>Telegram: @loonklvge</p>
+                    <p>Email: info@loonklage.ru</p>
+                    <p>Телефон: +7 (495) 123-45-67</p>
+                    <p>Часы работы: 10:00-22:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>ИНФОРМАЦИЯ</h3>
+                    <p><a href="delivery.html">Доставка</a></p>
+                    <p><a href="returns.html">Возврат</a></p>
+                    <p><a href="size-guide.html">Размеры</a></p>
+                    <p><a href="contact.html">Контакты</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="product-detail-modal" id="productDetailModal">
+        <div class="product-detail-content" id="productDetailContent"></div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const productsGrid = document.getElementById('productsGrid');
+            if (productsGrid) {
+                productsGrid.innerHTML = products.map(product => createProductCard(product)).join('');
+            }
+        });
+
+        function openProductDetail(productId) {
+            const product = getProductById(productId);
+            if (!product) return;
+            
+            const modal = document.getElementById('productDetailModal');
+            const content = document.getElementById('productDetailContent');
+            
+            const finalPrice = product.salePrice || product.price;
+            const discount = product.salePrice ? 
+                Math.round((1 - product.salePrice / product.price) * 100) : 0;
+            
+            content.innerHTML = `
+                <button class="product-detail-close" onclick="closeProductDetail()">&times;</button>
+                <div class="product-detail-grid">
+                    <div>
+                        <img src="${product.image}" alt="${product.name}" style="width: 100%; height: auto;">
+                    </div>
+                    <div>
+                        <h2 style="font-size: 2rem; margin-bottom: 1rem;">${product.name}</h2>
+                        <p style="color: var(--white-secondary); margin-bottom: 1rem;">Коллекция: ${product.collection}</p>
+                        ${product.description ? 
+                            `<p style="margin-bottom: 1rem;">${product.description}</p>` : ''}
+                        ${product.details ? 
+                            `<p style="color: var(--white-secondary); margin-bottom: 1rem; font-size: 0.9rem;">${product.details}</p>` : ''}
+                        <div style="margin: 2rem 0;">
+                            <h3 style="margin-bottom: 1rem;">ВЫБЕРИТЕ РАЗМЕР</h3>
+                            <div class="size-selector">
+                                ${product.sizes.map(size => `
+                                    <button class="size-btn" onclick="selectSize('${size}')">${size}</button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div style="margin: 2rem 0;">
+                            <h3 style="margin-bottom: 1rem;">ЦЕНА</h3>
+                            <div style="font-size: 2rem; font-weight: bold;">
+                                ${finalPrice.toLocaleString()} ₽
+                                ${product.salePrice ? 
+                                    `<span style="font-size: 1rem; color: var(--white-secondary); text-decoration: line-through; margin-left: 1rem;">
+                                        ${product.price.toLocaleString()} ₽
+                                    </span>` 
+                                    : ''}
+                            </div>
+                            ${discount > 0 ? 
+                                `<div style="color: var(--red); margin-top: 0.5rem;">Скидка ${discount}%</div>` 
+                                : ''}
+                        </div>
+                        ${product.inStock ? 
+                            `<button class="btn-primary" onclick="addToCartDetail(${product.id})" id="addToCartBtn">
+                                ДОБАВИТЬ В КОРЗИНУ
+                            </button>` 
+                            : `<button class="btn-primary" style="background: #666; cursor: not-allowed;" disabled>
+                                НЕТ В НАЛИЧИИ
+                            </button>`}
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function closeProductDetail() {
+            document.getElementById('productDetailModal').classList.remove('active');
+        }
+
+        function addToCartDetail(productId) {
+            if (!selectedSize) {
+                showNotification('Пожалуйста, выберите размер', 'error');
+                return;
+            }
+            
+            addToCart(productId, selectedSize);
+            selectedSize = null;
+            closeProductDetail();
+        }
+    </script>
+</body>
+</html>

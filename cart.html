@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOONKLAGE - Корзина</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/auth.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">LOONKLVGE</a>
+                <div class="user-controls">
+                    <div class="auth-buttons" id="authButtons"></div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">ГЛАВНАЯ</a></li>
+                    <li><a href="collections.html">КОЛЛЕКЦИИ</a></li>
+                    <li><a href="shop.html">МАГАЗИН</a></li>
+                    <li><a href="orders.html">ЗАКАЗЫ</a></li>
+                    <li><a href="profile.html">ПРОФИЛЬ</a></li>
+                    <li><a href="contact.html">КОНТАКТЫ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2 class="page-title">КОРЗИНА</h2>
+        <div class="cart-container">
+            <div class="cart-items" id="cartItemsContainer">
+                <div id="cartItems"></div>
+                <div id="cartEmpty" class="empty-state">Корзина пуста</div>
+            </div>
+            <div class="cart-summary" id="cartSummary">
+                <div id="cartTotal"></div>
+                <button class="btn-primary" onclick="checkout()" style="margin-top: 2rem;">ОФОРМИТЬ ЗАКАЗ</button>
+                <button class="btn-secondary" onclick="window.location.href='shop.html'" style="margin-top: 1rem; width: 100%;">
+                    ПРОДОЛЖИТЬ ПОКУПКИ
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LOONKLAGE</h3>
+                    <p>Эксклюзивная одежда с 2015 года</p>
+                    <p>Москва, ул. Арбат, д. 25</p>
+                    <div class="social-links">
+                        <a href="https://t.me/loonklvge" class="social-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>КОНТАКТЫ</h3>
+                    <p>Telegram: @loonklvge</p>
+                    <p>Email: info@loonklage.ru</p>
+                    <p>Телефон: +7 (495) 123-45-67</p>
+                    <p>Часы работы: 10:00-22:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>ИНФОРМАЦИЯ</h3>
+                    <p><a href="delivery.html">Доставка</a></p>
+                    <p><a href="returns.html">Возврат</a></p>
+                    <p><a href="size-guide.html">Размеры</a></p>
+                    <p><a href="contact.html">Контакты</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCart();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOONKLAGE - Главная</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+        
+        header {
+            margin-bottom: 0;
+        }
+        
+        .full-width-hero {
+            position: relative;
+            text-align: center;
+            width: 100%;
+            padding: 8rem 0;
+            margin: 0;
+            overflow: hidden;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -1px;
+        }
+        
+        .hero-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .fullscreen-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.3) contrast(0.8);
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .full-width-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1558769132-cb1a40ed0ada?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center center / cover no-repeat;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 900;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+        
+        .hero-subtitle {
+            color: var(--white-secondary);
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .hero-btn {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border: 2px solid var(--white);
+            background: transparent;
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .hero-btn:hover {
+            background: var(--white);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+
+        .size-error-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #d32f2f;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 400px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .size-error-message i {
+            font-size: 20px;
+            color: #ffcdd2;
+        }
+
+        .size-error-content {
+            flex: 1;
+        }
+
+        .size-error-content strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 16px;
+        }
+
+        .size-error-content div {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .full-width-hero {
+                padding: 4rem 0;
+                min-height: 60vh;
+            }
+            
+            .hero-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .size-error-message {
+                left: 20px;
+                right: 20px;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">LOONKLVGE</a>
+                <div class="user-controls">
+                    <div class="auth-buttons" id="authButtons"></div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">ГЛАВНАЯ</a></li>
+                    <li><a href="collections.html">КОЛЛЕКЦИИ</a></li>
+                    <li><a href="shop.html">МАГАЗИН</a></li>
+                    <li><a href="orders.html">ЗАКАЗЫ</a></li>
+                    <li><a href="profile.html">ПРОФИЛЬ</a></li>
+                    <li><a href="contact.html">КОНТАКТЫ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="full-width-hero">
+            <video class="fullscreen-video" autoplay muted loop playsinline style="top: 0; margin: 0; padding: 0;">
+                <source src="videos/background-video.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+            
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>LOONKLVGE</h1>
+                    <p class="hero-subtitle">dipsize castle anarchy</p>
+                    <p style="color: var(--white-secondary); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">
+                        Минималистичные коллекции премиального качества. Создано для тех, кто ценит детали и уникальность в каждой вещи.
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="hero-btn" onclick="window.location.href='shop.html'">
+                            <i class="fas fa-shopping-bag"></i> В МАГАЗИН
+                        </button>
+                        <button class="hero-btn" onclick="window.location.href='collections.html'">
+                            <i class="fas fa-star"></i> КОЛЛЕКЦИИ
+                        </button>
+                        <button class="hero-btn" onclick="window.location.href='contact.html'">
+                            <i class="fas fa-envelope"></i> КОНТАКТЫ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <h2 class="page-title">NEW</h2>
+            <div class="products-grid" id="featuredProducts"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LOONKLAGE</h3>
+                    <p>Эксклюзивная одежда с 2015 года</p>
+                    <p>Москва, ул. Арбат, д. 25</p>
+                    <div class="social-links">
+                        <a href="https://t.me/loonklvge" class="social-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>КОНТАКТЫ</h3>
+                    <p>Telegram: @loonklvge</p>
+                    <p>Email: info@loonklage.ru</p>
+                    <p>Телефон: +7 (495) 123-45-67</p>
+                    <p>Часы работы: 10:00-22:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>ИНФОРМАЦИЯ</h3>
+                    <p><a href="delivery.html">Доставка</a></p>
+                    <p><a href="returns.html">Возврат</a></p>
+                    <p><a href="size-guide.html">Размеры</a></p>
+                    <p><a href="contact.html">Контакты</a></p>
+                </div>
+            </div>
+            
+            <p style="text-align: center; margin-top: 2rem; color: var(--white-secondary); font-size: 0.9rem;">
+                &copy; 2015-2025 LOONKLAGE. Все права защищены.
+            </p>
+        </div>
+    </footer>
+
+    <div class="product-detail-modal" id="productDetailModal">
+        <div class="product-detail-content" id="productDetailContent"></div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAuthButtons();
+            loadFeaturedProducts();
+            initVideoBackground();
+            
+            setTimeout(function() {
+                const header = document.querySelector('header');
+                const hero = document.querySelector('.full-width-hero');
+                if (header && hero) {
+                    const headerBottom = header.getBoundingClientRect().bottom;
+                    const heroTop = hero.getBoundingClientRect().top;
+                    const gap = heroTop - headerBottom;
+                    
+                    if (gap > 0) {
+                        hero.style.marginTop = '-' + gap + 'px';
+                    }
+                }
+            }, 100);
+        });
+
+        function initVideoBackground() {
+            const video = document.querySelector('.fullscreen-video');
+            if (video) {
+                video.addEventListener('error', function() {
+                    this.style.display = 'none';
+                });
+                
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    video.setAttribute('playsinline', '');
+                    video.setAttribute('webkit-playsinline', '');
+                    
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            showVideoPlayButton();
+                        });
+                    }
+                }
+            }
+        }
+
+        function showVideoPlayButton() {
+            const videoContainer = document.querySelector('.full-width-hero');
+            if (!videoContainer) return;
+            
+            const playButton = document.createElement('button');
+            playButton.innerHTML = '<i class="fas fa-play"></i> Включить фон';
+            playButton.style.cssText = `
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                padding: 10px 15px;
+                border-radius: 3px;
+                cursor: pointer;
+                z-index: 10;
+                backdrop-filter: blur(5px);
+            `;
+            
+            playButton.onclick = function() {
+                const video = document.querySelector('.fullscreen-video');
+                if (video) {
+                    video.play();
+                    playButton.remove();
+                }
+            };
+            
+            videoContainer.appendChild(playButton);
+        }
+
+        function loadFeaturedProducts() {
+            const featuredGrid = document.getElementById('featuredProducts');
+            if (featuredGrid) {
+                const newProducts = products.filter(p => p.isNew && p.inStock).slice(0, 8);
+                if (newProducts.length > 0) {
+                    featuredGrid.innerHTML = newProducts.map(product => createProductCard(product)).join('');
+                } else {
+                    const availableProducts = products.filter(p => p.inStock).slice(0, 8);
+                    featuredGrid.innerHTML = availableProducts.map(product => createProductCard(product)).join('');
+                }
+            }
+        }
+
+        window.selectedSize = null;
+
+        window.selectSize = function(size) {
+            window.selectedSize = size;
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const errorMessages = document.querySelectorAll('.size-error-message');
+            errorMessages.forEach(msg => msg.remove());
+        }
+
+        window.showSizeError = function() {
+            document.querySelectorAll('.size-error-message').forEach(el => el.remove());
+            
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'size-error-message';
+            errorMessage.innerHTML = `
+                <i class="fas fa-exclamation-circle"></i>
+                <div class="size-error-content">
+                    <strong>Выберите размер</strong>
+                    <div>Пожалуйста, выберите размер перед добавлением товара в корзину</div>
+                </div>
+            `;
+            
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '×';
+            closeButton.style.cssText = `
+                background: none;
+                border: none;
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 0;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            closeButton.onclick = function() {
+                errorMessage.remove();
+            };
+            
+            errorMessage.appendChild(closeButton);
+            document.body.appendChild(errorMessage);
+            
+            setTimeout(() => {
+                if (errorMessage.parentNode) {
+                    errorMessage.remove();
+                }
+            }, 5000);
+            
+            const addToCartBtn = document.getElementById('addToCartBtn');
+            if (addToCartBtn) {
+                addToCartBtn.style.animation = 'none';
+                setTimeout(() => {
+                    addToCartBtn.style.animation = 'shake 0.5s ease-in-out';
+                }, 10);
+                
+                if (!document.querySelector('#shake-animation')) {
+                    const style = document.createElement('style');
+                    style.id = 'shake-animation';
+                    style.textContent = `
+                        @keyframes shake {
+                            0%, 100% { transform: translateX(0); }
+                            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                            20%, 40%, 60%, 80% { transform: translateX(5px); }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+            
+            const sizeSelector = document.querySelector('.size-selector');
+            if (sizeSelector) {
+                sizeSelector.style.boxShadow = '0 0 0 2px #d32f2f';
+                setTimeout(() => {
+                    sizeSelector.style.boxShadow = '';
+                }, 1000);
+            }
+        }
+
+        window.openProductDetail = function(productId) {
+            const product = getProductById(productId);
+            if (!product) return;
+            
+            const modal = document.getElementById('productDetailModal');
+            const content = document.getElementById('productDetailContent');
+            
+            const finalPrice = product.salePrice || product.price;
+            const discount = product.salePrice ? 
+                Math.round((1 - product.salePrice / product.price) * 100) : 0;
+            
+            content.innerHTML = `
+                <button class="product-detail-close" onclick="closeProductDetail()">&times;</button>
+                <div class="product-detail-grid">
+                    <div>
+                        <img src="${product.image}" alt="${product.name}" style="width: 100%; height: auto; border: 1px solid var(--gray);">
+                    </div>
+                    <div>
+                        <h2 style="font-size: 2rem; margin-bottom: 1rem;">${product.name}</h2>
+                        <p style="color: var(--white-secondary); margin-bottom: 1rem;">Коллекция: ${product.collection}</p>
+                        ${product.description ? 
+                            `<p style="margin-bottom: 1rem; line-height: 1.6;">${product.description}</p>` : ''}
+                        ${product.details ? 
+                            `<p style="color: var(--white-secondary); margin-bottom: 1rem; font-size: 0.9rem; line-height: 1.5;">${product.details}</p>` : ''}
+                        <div style="margin: 2rem 0;">
+                            <h3 style="margin-bottom: 1rem;">ВЫБЕРИТЕ РАЗМЕР</h3>
+                            <div class="size-selector" id="sizeSelector">
+                                ${product.sizes.map(size => `
+                                    <button class="size-btn" onclick="selectSize('${size}')">${size}</button>
+                                `).join('')}
+                            </div>
+                            <p style="color: var(--white-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                                <i class="fas fa-info-circle"></i> Выберите размер перед добавлением в корзину
+                            </p>
+                        </div>
+                        <div style="margin: 2rem 0;">
+                            <h3 style="margin-bottom: 1rem;">ЦЕНА</h3>
+                            <div style="font-size: 2rem; font-weight: bold;">
+                                ${finalPrice.toLocaleString()} ₽
+                                ${product.salePrice ? 
+                                    `<span style="font-size: 1rem; color: var(--white-secondary); text-decoration: line-through; margin-left: 1rem;">
+                                        ${product.price.toLocaleString()} ₽
+                                    </span>` 
+                                    : ''}
+                            </div>
+                            ${discount > 0 ? 
+                                `<div style="color: var(--red); margin-top: 0.5rem; font-weight: bold;">
+                                    <i class="fas fa-tag"></i> Скидка ${discount}%
+                                </div>` 
+                                : ''}
+                        </div>
+                        ${product.inStock ? 
+                            `<button class="btn-primary" onclick="addToCartFromDetail(${product.id})" id="addToCartBtn">
+                                <i class="fas fa-shopping-cart"></i> ДОБАВИТЬ В КОРЗИНУ
+                            </button>` 
+                            : `<button class="btn-primary" style="background: #666; cursor: not-allowed;" disabled>
+                                <i class="fas fa-times-circle"></i> НЕТ В НАЛИЧИИ
+                            </button>`}
+                    </div>
+                </div>
+            `;
+            
+            window.selectedSize = null;
+            modal.classList.add('active');
+        }
+
+        function closeProductDetail() {
+            document.getElementById('productDetailModal').classList.remove('active');
+        }
+
+        window.addToCartFromDetail = function(productId) {
+            if (!window.selectedSize) {
+                showSizeError();
+                return;
+            }
+            
+            addToCart(productId, window.selectedSize);
+            window.selectedSize = null;
+            
+            const confirmMessage = document.createElement('div');
+            confirmMessage.className = 'size-error-message';
+            confirmMessage.style.backgroundColor = '#2e7d32';
+            confirmMessage.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <div class="size-error-content">
+                    <strong>Товар добавлен в корзину</strong>
+                    <div>Перейдите в корзину для оформления заказа</div>
+                </div>
+            `;
+            
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '×';
+            closeButton.style.cssText = `
+                background: none;
+                border: none;
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 0;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            closeButton.onclick = function() {
+                confirmMessage.remove();
+            };
+            
+            confirmMessage.appendChild(closeButton);
+            document.body.appendChild(confirmMessage);
+            
+            setTimeout(() => {
+                if (confirmMessage.parentNode) {
+                    confirmMessage.remove();
+                }
+            }, 3000);
+            
+            closeProductDetail();
+        }
+    </script>
+</body>
+</html>

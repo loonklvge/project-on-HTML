@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOONKLAGE - Контакты</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="js/auth.js"></script>
+    <style>
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-card {
+            background: var(--black-light);
+            padding: 2rem;
+            border: 1px solid var(--gray);
+        }
+        
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-top: 1rem;
+            border: 1px solid var(--gray);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">LOONKLVGE</a>
+                <div class="user-controls">
+                    <div class="auth-buttons" id="authButtons"></div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">ГЛАВНАЯ</a></li>
+                    <li><a href="collections.html">КОЛЛЕКЦИИ</a></li>
+                    <li><a href="shop.html">МАГАЗИН</a></li>
+                    <li><a href="orders.html">ЗАКАЗЫ</a></li>
+                    <li><a href="profile.html">ПРОФИЛЬ</a></li>
+                    <li><a href="contact.html">КОНТАКТЫ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2 class="page-title">КОНТАКТЫ</h2>
+        <div class="contact-info">
+            <div class="contact-card">
+                <h3 style="margin-bottom: 1rem;"><i class="fas fa-store"></i> НАШИ МАГАЗИНЫ</h3>
+                <p><strong>Москва, Арбат</strong></p>
+                <p>ул. Арбат, д. 25</p>
+                <p>10:00-22:00 ежедневно</p>
+                <p>+7 (495) 123-45-67</p>
+            </div>
+            <div class="contact-card">
+                <h3 style="margin-bottom: 1rem;"><i class="fas fa-headset"></i> ТЕХПОДДЕРЖКА</h3>
+                <p>Telegram: <a href="https://t.me/loonklvge" style="color: var(--white);">@loonklvge</a></p>
+                <p>Email: info@loonklage.ru</p>
+                <p>Время работы: 10:00-20:00</p>
+            </div>
+            <div class="contact-card">
+                <h3 style="margin-bottom: 1rem;"><i class="fas fa-truck"></i> ДОСТАВКА</h3>
+                <p>По Москве: 1-2 дня</p>
+                <p>По России: 3-7 дней</p>
+                <p>Самовывоз: бесплатно</p>
+                <p>Курьер: от 300 ₽</p>
+            </div>
+        </div>
+        <div class="contact-card">
+            <h3 style="margin-bottom: 1rem;"><i class="fas fa-map-marker-alt"></i> КАРТА</h3>
+            <div id="map"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LOONKLAGE</h3>
+                    <p>Эксклюзивная одежда с 2015 года</p>
+                    <p>Москва, ул. Арбат, д. 25</p>
+                    <div class="social-links">
+                        <a href="https://t.me/loonklvge" class="social-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>КОНТАКТЫ</h3>
+                    <p>Telegram: @loonklvge</p>
+                    <p>Email: info@loonklage.ru</p>
+                    <p>Телефон: +7 (495) 123-45-67</p>
+                    <p>Часы работы: 10:00-22:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>ИНФОРМАЦИЯ</h3>
+                    <p><a href="delivery.html">Доставка</a></p>
+                    <p><a href="returns.html">Возврат</a></p>
+                    <p><a href="size-guide.html">Размеры</a></p>
+                    <p><a href="contact.html">Контакты</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            initMap();
+        });
+
+        function initMap() {
+            const map = L.map('map').setView([55.7498, 37.5926], 15);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: ''
+            }).addTo(map);
+            
+            L.marker([55.7498, 37.5926])
+                .addTo(map)
+                .bindPopup('<b>LOONKLAGE</b><br>ул. Арбат, д. 25<br>10:00-22:00')
+                .openPopup();
+        }
+    </script>
+</body>
+</html>

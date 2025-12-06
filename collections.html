@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOONKLAGE - Коллекции</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/auth.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">LOONKLVGE</a>
+                <div class="user-controls">
+                    <div class="auth-buttons" id="authButtons"></div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">ГЛАВНАЯ</a></li>
+                    <li><a href="collections.html">КОЛЛЕКЦИИ</a></li>
+                    <li><a href="shop.html">МАГАЗИН</a></li>
+                    <li><a href="orders.html">ЗАКАЗЫ</a></li>
+                    <li><a href="profile.html">ПРОФИЛЬ</a></li>
+                    <li><a href="contact.html">КОНТАКТЫ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2 class="page-title">КОЛЛЕКЦИИ</h2>
+        <div class="collection-grid" id="collectionsGrid"></div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LOONKLAGE</h3>
+                    <p>Эксклюзивная одежда с 2015 года</p>
+                    <p>Москва, ул. Арбат, д. 25</p>
+                    <div class="social-links">
+                        <a href="https://t.me/loonklvge" class="social-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>КОНТАКТЫ</h3>
+                    <p>Telegram: @loonklvge</p>
+                    <p>Email: info@loonklage.ru</p>
+                    <p>Телефон: +7 (495) 123-45-67</p>
+                    <p>Часы работы: 10:00-22:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>ИНФОРМАЦИЯ</h3>
+                    <p><a href="delivery.html">Доставка</a></p>
+                    <p><a href="returns.html">Возврат</a></p>
+                    <p><a href="size-guide.html">Размеры</a></p>
+                    <p><a href="contact.html">Контакты</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="product-detail-modal" id="collectionDetailModal">
+        <div class="product-detail-content" id="collectionDetailContent"></div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const collectionsGrid = document.getElementById('collectionsGrid');
+            if (collectionsGrid) {
+                collectionsGrid.innerHTML = collections.map(collection => `
+                    <div class="collection-card" onclick="openCollection(${collection.id})">
+                        <img src="${collection.image}" alt="${collection.name}" style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 1rem;">
+                        <h3>${collection.name}</h3>
+                        <p style="color: var(--white-secondary);">${collection.description}</p>
+                    </div>
+                `).join('');
+            }
+        });
+
+        function openCollection(collectionId) {
+            const collection = collections.find(c => c.id === collectionId);
+            const collectionProducts = products.filter(p => p.collection === collection.name);
+            
+            const modal = document.getElementById('collectionDetailModal');
+            const content = document.getElementById('collectionDetailContent');
+            
+            content.innerHTML = `
+                <button class="product-detail-close" onclick="closeCollectionDetail()">&times;</button>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; text-align: center;">${collection.name}</h2>
+                <p style="text-align: center; color: var(--white-secondary); margin-bottom: 3rem;">
+                    ${collection.description}
+                </p>
+                ${collectionProducts.length === 0 ? 
+                    '<div class="empty-state">В этой коллекции пока нет товаров</div>' :
+                    `<div class="products-grid">
+                        ${collectionProducts.map(product => `
+                            <div class="product-card" onclick="openProductDetail(${product.id})">
+                                ${product.isNew ? '<div class="product-badge">NEW</div>' : ''}
+                                ${product.salePrice ? `<div class="product-badge">-${Math.round((1 - product.salePrice / product.price) * 100)}%</div>` : ''}
+                                ${!product.inStock ? '<div class="product-badge" style="background: #666;">НЕТ В НАЛИЧИИ</div>' : ''}
+                                <img src="${product.image}" alt="${product.name}" class="product-img">
+                                <div class="product-info">
+                                    <h3 style="margin-bottom: 0.5rem;">${product.name}</h3>
+                                    <div class="product-price">
+                                        ${product.salePrice ? 
+                                            `<span style="text-decoration: line-through; color: var(--white-secondary); margin-right: 10px; font-size: 0.9rem;">
+                                                ${product.price.toLocaleString()} ₽
+                                            </span>` 
+                                            : ''}
+                                        ${(product.salePrice || product.price).toLocaleString()} ₽
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>`
+                }
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function closeCollectionDetail() {
+            document.getElementById('collectionDetailModal').classList.remove('active');
+        }
+
+        function openProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            closeCollectionDetail();
+            
+            const modal = document.createElement('div');
+            modal.className = 'product-detail-modal active';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.95);
+                z-index: 1002;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 2rem;
+            `;
+            
+            const finalPrice = product.salePrice || product.price;
+            const discount = product.salePrice ? 
+                Math.round((1 - product.salePrice / product.price) * 100) : 0;
+            
+            modal.innerHTML = `
+                <div class="product-detail-content">
+                    <button class="product-detail-close" onclick="this.parentElement.parentElement.remove()">&times;</button>
+                    <div class="product-detail-grid">
+                        <div>
+                            <img src="${product.image}" alt="${product.name}" style="width: 100%; height: auto;">
+                        </div>
+                        <div>
+                            <h2 style="font-size: 2rem; margin-bottom: 1rem;">${product.name}</h2>
+                            <p style="color: var(--white-secondary); margin-bottom: 1rem;">Коллекция: ${product.collection}</p>
+                            ${product.description ? 
+                                `<p style="margin-bottom: 1rem;">${product.description}</p>` : ''}
+                            ${product.details ? 
+                                `<p style="color: var(--white-secondary); margin-bottom: 1rem; font-size: 0.9rem;">${product.details}</p>` : ''}
+                            <div style="margin: 2rem 0;">
+                                <h3 style="margin-bottom: 1rem;">ВЫБЕРИТЕ РАЗМЕР</h3>
+                                <div class="size-selector">
+                                    ${product.sizes.map(size => `
+                                        <button class="size-btn" onclick="selectSize('${size}')">${size}</button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <div style="margin: 2rem 0;">
+                                <h3 style="margin-bottom: 1rem;">ЦЕНА</h3>
+                                <div style="font-size: 2rem; font-weight: bold;">
+                                    ${finalPrice.toLocaleString()} ₽
+                                    ${product.salePrice ? 
+                                        `<span style="font-size: 1rem; color: var(--white-secondary); text-decoration: line-through; margin-left: 1rem;">
+                                            ${product.price.toLocaleString()} ₽
+                                        </span>` 
+                                        : ''}
+                                </div>
+                                ${discount > 0 ? 
+                                    `<div style="color: var(--red); margin-top: 0.5rem;">Скидка ${discount}%</div>` 
+                                    : ''}
+                            </div>
+                            ${product.inStock ? 
+                                `<button class="btn-primary" onclick="addToCartFromModal(${product.id}, this)">
+                                    ДОБАВИТЬ В КОРЗИНУ
+                                </button>` 
+                                : `<button class="btn-primary" style="background: #666; cursor: not-allowed;" disabled>
+                                    НЕТ В НАЛИЧИИ
+                                </button>`}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function addToCartFromModal(productId, button) {
+            if (!selectedSize) {
+                showNotification('Пожалуйста, выберите размер', 'error');
+                return;
+            }
+            
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const cart = JSON.parse(localStorage.getItem('loonklage_cart')) || [];
+            
+            const cartItem = {
+                id: product.id,
+                name: product.name,
+                price: product.salePrice || product.price,
+                size: selectedSize,
+                image: product.image,
+                quantity: 1
+            };
+            
+            const existingItemIndex = cart.findIndex(item => 
+                item.id === productId && item.size === selectedSize
+            );
+            
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += 1;
+            } else {
+                cart.push(cartItem);
+            }
+            
+            localStorage.setItem('loonklage_cart', JSON.stringify(cart));
+            updateCartCount();
+            showNotification(`Товар "${product.name}" добавлен в корзину!`);
+            
+            button.closest('.product-detail-modal').remove();
+            selectedSize = null;
+        }
+    </script>
+</body>
+</html>

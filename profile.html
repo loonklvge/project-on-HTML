@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOONKLAGE - Профиль</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .profile-header {
+            background: var(--black-light);
+            padding: 3rem 2rem;
+            border: 1px solid var(--gray);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--white);
+            object-fit: cover;
+            background: var(--black-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--white-secondary);
+        }
+        
+        .avatar-upload {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 35px;
+            height: 35px;
+            background: var(--white);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid var(--black-light);
+        }
+        
+        .avatar-upload:hover {
+            background: var(--gray);
+            color: var(--white);
+        }
+        
+        .profile-info {
+            background: var(--black-light);
+            padding: 2rem;
+            border: 1px solid var(--gray);
+            margin-bottom: 2rem;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            color: var(--white-secondary);
+            font-weight: 500;
+        }
+        
+        .info-value {
+            color: var(--white);
+            font-weight: 600;
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .upload-btn {
+            background: transparent;
+            border: 1px solid var(--white);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .upload-btn:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+        
+        #avatarInput {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">LOONKLVGE</a>
+                <div class="user-controls">
+                    <div class="auth-buttons" id="authButtons"></div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">ГЛАВНАЯ</a></li>
+                    <li><a href="collections.html">КОЛЛЕКЦИИ</a></li>
+                    <li><a href="shop.html">МАГАЗИН</a></li>
+                    <li><a href="orders.html">ЗАКАЗЫ</a></li>
+                    <li><a href="profile.html">ПРОФИЛЬ</a></li>
+                    <li><a href="contact.html">КОНТАКТЫ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2 class="page-title">МОЙ ПРОФИЛЬ</h2>
+        <div class="profile-container" id="profileContainer">
+            <div class="empty-state" id="loginRequired">
+                <i class="fas fa-user-lock" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                <h3>ТРЕБУЕТСЯ АВТОРИЗАЦИЯ</h3>
+                <p style="margin-bottom: 1.5rem;">Войдите в систему для доступа к профилю</p>
+                <button class="btn-auth" onclick="window.location.href='login.html'">
+                    <i class="fas fa-sign-in-alt"></i> ВОЙТИ В СИСТЕМУ
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LOONKLAGE</h3>
+                    <p>Эксклюзивная одежда с 2015 года</p>
+                    <p>Москва, ул. Арбат, д. 25</p>
+                    <div class="social-links">
+                        <a href="https://t.me/loonklvge" class="social-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>КОНТАКТЫ</h3>
+                    <p>Telegram: @loonklvge</p>
+                    <p>Email: info@loonklage.ru</p>
+                    <p>Телефон: +7 (495) 123-45-67</p>
+                    <p>Часы работы: 10:00-22:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>ИНФОРМАЦИЯ</h3>
+                    <p><a href="delivery.html">Доставка</a></p>
+                    <p><a href="returns.html">Возврат</a></p>
+                    <p><a href="size-guide.html">Размеры</a></p>
+                    <p><a href="contact.html">Контакты</a></p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 2rem; color: var(--white-secondary); font-size: 0.9rem;">
+                &copy; 2015-2025 LOONKLAGE. Все права защищены.
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAuthButtons();
+            loadUserProfile();
+        });
+
+        function loadUserProfile() {
+            const profileContainer = document.getElementById('profileContainer');
+            const loginRequired = document.getElementById('loginRequired');
+            const user = JSON.parse(localStorage.getItem('loonklage_current_user'));
+            
+            if (!user) {
+                if (loginRequired) {
+                    loginRequired.style.display = 'block';
+                }
+                const existingProfile = document.getElementById('userProfile');
+                if (existingProfile) {
+                    existingProfile.style.display = 'none';
+                }
+                return;
+            }
+            
+            if (loginRequired) {
+                loginRequired.style.display = 'none';
+            }
+            
+            let profileElement = document.getElementById('userProfile');
+            
+            if (!profileElement) {
+                profileElement = document.createElement('div');
+                profileElement.id = 'userProfile';
+                profileContainer.appendChild(profileElement);
+            }
+            
+            let userAvatar = localStorage.getItem('loonklage_user_avatar');
+            if (!userAvatar) {
+                userAvatar = `<i class="fas fa-user"></i>`;
+            }
+            
+            profileElement.innerHTML = `
+                <div class="profile-header">
+                    <div class="avatar-container">
+                        <div class="avatar" id="avatarDisplay">
+                            ${userAvatar}
+                        </div>
+                        <div class="avatar-upload" onclick="document.getElementById('avatarInput').click()">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="uploadAvatar(event)">
+                    </div>
+                    <h2 style="margin-bottom: 0.5rem;">${user.name}</h2>
+                    <p style="color: var(--white-secondary);">Пользователь LOONKLAGE</p>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">ИМЯ ПОЛЬЗОВАТЕЛЯ</span>
+                        <span class="info-value">${user.name}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">EMAIL</span>
+                        <span class="info-value">${user.email}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">ДАТА РЕГИСТРАЦИИ</span>
+                        <span class="info-value">${user.createdAt ? new Date(user.createdAt).toLocaleDateString('ru-RU') : new Date().toLocaleDateString('ru-RU')}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">СТАТУС</span>
+                        <span class="info-value" style="color: var(--red); font-weight: bold;">ПРЕМИУМ</span>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="upload-btn" onclick="document.getElementById('avatarInput').click()">
+                        <i class="fas fa-image"></i> СМЕНИТЬ АВАТАР
+                    </button>
+                    <button class="upload-btn" onclick="handleLogout()">
+                        <i class="fas fa-sign-out-alt"></i> ВЫЙТИ
+                    </button>
+                </div>
+                <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--gray);">
+                    <p style="color: var(--white-secondary); margin-bottom: 1rem;">
+                        Для связи с поддержкой напишите в Telegram:
+                    </p>
+                    <a href="https://t.me/loonklvge" target="_blank" style="color: var(--white); text-decoration: none; font-weight: bold; font-size: 1.1rem;">
+                        <i class="fab fa-telegram"></i> @loonklvge
+                    </a>
+                </div>
+            `;
+        }
+
+        function uploadAvatar(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.match('image.*')) {
+                alert('Пожалуйста, выберите изображение');
+                return;
+            }
+            
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Изображение должно быть меньше 2MB');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                localStorage.setItem('loonklage_user_avatar', `<img src="${e.target.result}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`);
+                
+                const avatarDisplay = document.getElementById('avatarDisplay');
+                if (avatarDisplay) {
+                    avatarDisplay.innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+                }
+                
+                showNotification('Аватар успешно обновлен!');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        function handleLogout() {
+            if (confirm('Вы уверены, что хотите выйти?')) {
+                localStorage.removeItem('loonklage_current_user');
+                showNotification('Вы вышли из системы', 'success');
+                
+                setTimeout(() => {
+                    updateAuthButtons();
+                    window.location.href = 'index.html';
+                }, 1000);
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--white)' : 'var(--red)'};
+                color: ${type === 'success' ? 'var(--black)' : 'var(--white)'};
+                padding: 1rem 1.5rem;
+                border: 1px solid var(--gray);
+                z-index: 9999;
+                animation: slideIn 0.3s;
+                max-width: 300px;
+                font-weight: bold;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
